@@ -7,9 +7,9 @@
 
 ## Qucik Start
 
-1. Download pretrained model
+1. Download [pretrained models](https://drive.google.com/drive/folders/1jLlJtP7BxLgTaoFqiNS_PD2GTLVXfdk9?usp=sharing)
 2. Specify the inputs in "sentences.txt"
-3. generate with the command
+3. Generate audios with the command
 ```
 python gen_tts.py --tts_weights ./pretrained_models/tacotron2.pyt --voc_weights ./pretrained_models/wavernn.pyt --save_dir ./audio_samples
 ```
