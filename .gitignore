@@ -1,3 +1,10 @@
+# 
+training_record/
+model_outputs/
+pretrained_models/
+training_data/
+
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
