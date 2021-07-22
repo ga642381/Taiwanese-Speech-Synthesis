@@ -5,7 +5,7 @@
 * The model that translate from Chinese(中文，華語) to 臺羅拼音 will be released soon
 * The trained TTS model can be combined with [TaiwaneseTTS](https://github.com/ga642381/TaiwaneseTTS), so that we will have a awesome GUI interface. I intend to merge these two repositories into one in the future
 
-## Qucik Start
+## Quick Start
 
 1. Download [pretrained models](https://drive.google.com/drive/folders/1jLlJtP7BxLgTaoFqiNS_PD2GTLVXfdk9?usp=sharing)
 2. Specify the inputs in "sentences.txt"
