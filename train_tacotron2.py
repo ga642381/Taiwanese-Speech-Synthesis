@@ -42,7 +42,7 @@ def main(args):
     print('Using device:', device)
 
     # Instantiate Tacotron Model
-    print('\nInitialising Tacotron2 Model...\n')
+    print('\nInitializing Tacotron2 Model...\n')
     model = Tacotron2().to(device)
     model.num_params()
 
@@ -191,7 +191,7 @@ def create_gta_features(model: Tacotron2, train_set, save_path: Path):
 if __name__ == "__main__":
     # Parse Arguments
     parser = argparse.ArgumentParser(description='Train Tacotron2 TTS')
-    parser.add_argument('data_dir')
+    parser.add_argument('data_dir', help='Relative path of dataset.pkl')
     parser.add_argument('--force_train', '-f', action='store_true', help='Forces the model to train past total steps')
     parser.add_argument('--force_gta', '-g', action='store_true', help='Force the model to create GTA features')
     parser.add_argument('--force_cpu', '-c', action='store_true', help='Forces CPU-only training, even when in CUDA capable environment')

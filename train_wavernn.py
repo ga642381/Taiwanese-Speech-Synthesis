@@ -14,7 +14,7 @@ from utils.distribution import discretized_mix_logistic_loss
 from utils.checkpoints import save_checkpoint, restore_checkpoint
 
 from wavernn import WaveRNN
-from gen_wavernn import gen_testset
+#from gen_wavernn import gen_testset
 
 def main(args):
     hp.configure(args.hp_file)  # load hparams from file
@@ -38,7 +38,7 @@ def main(args):
         device = torch.device('cpu')
     print('Using device:', device)
 
-    print('\nInitialising Model...\n')
+    print('\nInitializing Model...\n')
 
     # Instantiate WaveRNN Model
     voc_model = WaveRNN(rnn_dims=hp.voc_rnn_dims,
@@ -98,8 +98,9 @@ def voc_train_loop(paths: Paths, model: WaveRNN, loss_func, optimizer, train_set
 
             # Parallelize model onto GPUS using workaround due to python bug
             if device.type == 'cuda' and torch.cuda.device_count() > 1:
-                y_hat = data_parallel_workaround(model, x, m)
-            else:
+                # if uncomment this the code will raise error, this workaround seems to be invalid.
+                #y_hat = data_parallel_workaround(model, x, m)
+            #else:
                 y_hat = model(x, m)
 
             if model.mode == 'RAW':
@@ -130,8 +131,9 @@ def voc_train_loop(paths: Paths, model: WaveRNN, loss_func, optimizer, train_set
             k = step // 1000
 
             if step % hp.voc_checkpoint_every == 0:
-                gen_testset(model, test_set, hp.voc_gen_at_checkpoint, hp.voc_gen_batched,
-                            hp.voc_target, hp.voc_overlap, paths.voc_output)
+                # have no idea what's the point of this line, comment it 
+                #gen_testset(model, test_set, hp.voc_gen_at_checkpoint, hp.voc_gen_batched,
+                #             hp.voc_target, hp.voc_overlap, paths.voc_output)
                 ckpt_name = f'wave_step{k}K'
                 save_checkpoint('voc', paths, model, optimizer,
                                 name=ckpt_name, is_silent=True)
@@ -148,11 +150,11 @@ def voc_train_loop(paths: Paths, model: WaveRNN, loss_func, optimizer, train_set
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Train WaveRNN Vocoder')
-    parser.add_argument('data_dir')
-    parser.add_argument('--lr', '-l', type=float,  help='[float] override hparams.py learning rate')
-    parser.add_argument('--batch_size', '-b', type=int, help='[int] override hparams.py batch size')
+    parser.add_argument('data_dir', help='Relative path of dataset.pkl')
+    parser.add_argument('--lr', '-l', type=float,  help='[float] Override hparams.py learning rate')
+    parser.add_argument('--batch_size', '-b', type=int, help='[int] Override hparams.py batch size')
     parser.add_argument('--force_train', '-f', action='store_true', help='Forces the model to train past total steps')
-    parser.add_argument('--gta', '-g', action='store_true', help='train wavernn on GTA features')
+    parser.add_argument('--gta', '-g', action='store_true', help='Train WaveRNN on GTA features')
     parser.add_argument('--force_cpu', '-c', action='store_true', help='Forces CPU-only training, even when in CUDA capable environment')
     parser.add_argument('--hp_file', metavar='FILE', default='hparams.py', help='The file to use for the hyperparameters')
     args = parser.parse_args()
