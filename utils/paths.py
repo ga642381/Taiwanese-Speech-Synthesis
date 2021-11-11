@@ -46,7 +46,8 @@ class Paths:
         self.tts_attention = self.tts_record/'attention'
         self.tts_mel_plot = self.tts_record/'mel_plots'
 
-        self.create_paths(output_only=output_stage)
+        #self.create_paths(output_only=output_stage) // bug?
+        self.create_paths()
 
     def create_paths(self):
         # data

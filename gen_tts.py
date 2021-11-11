@@ -22,6 +22,13 @@ class TaiwaneseTacotron():
     def __init__(self, args):
         self.args = args
         #================ vocoder ================#
+        '''
+            Setting up vocoder hyperparameters
+            
+            Supported vocoder:
+                1. wavernn
+                2. griffinlim
+        '''
         if not (self.args.vocoder == "wavernn" or self.args.vocoder == "griffinlim"):
             raise argparse.ArgumentError('Must provide a valid vocoder type!')
 
@@ -38,15 +45,17 @@ class TaiwaneseTacotron():
 
         #================ others ================#
         # self.paths = Paths("", hp.voc_model_id, hp.tts_model_id, output_stage=True)
+
+        # setup computing resource
         if not self.args.force_cpu and torch.cuda.is_available():
             device = torch.device('cuda')
         else:
             device = torch.device('cpu')
         print('Using device:', device)
 
-        # === Wavernn === #
+        # === Initialize Wavernn === #
         if self.args.vocoder == 'wavernn':
-            print('\nInitialising WaveRNN Model...\n')
+            print('\nInitializing WaveRNN Model...\n')
             self.voc_model = WaveRNN(rnn_dims=hp.voc_rnn_dims,
                                      fc_dims=hp.voc_fc_dims,
                                      bits=hp.bits,
@@ -64,14 +73,14 @@ class TaiwaneseTacotron():
             voc_load_path = self.args.voc_weights
             self.voc_model.load(voc_load_path)
 
-        # === Tacotron2 === #
+        # === Initialize Tacotron2 === #
         print('\nInitializing Tacotron2 Model...\n')
         self.tts_model = Tacotron2().to(device)
         # tts_load_path = self.args.tts_weights if self.args.tts_weights else self.paths.tts_latest_weights
         tts_load_path = self.args.tts_weights
         self.tts_model.load(tts_load_path)
 
-        # === Infomation === #
+        # === Display Conclusion / Information === #
         if self.args.vocoder == 'wavernn':
             self.voc_k = self.voc_model.get_step() // 1000
             self.tts_k = self.tts_model.get_step() // 1000
@@ -162,12 +171,12 @@ class TaiwaneseTacotron():
 if __name__ == '__main__':
     # Parse Arguments
     parser = argparse.ArgumentParser(description='TTS')
-    parser.add_argument('--tts_weights', type=str,
+    parser.add_argument('tts_weights', metavar='tts_weights_dir', type=str,
                         help='[string/path] Load in different Tacotron weights', default=None)
 
-    parser.add_argument('--voc_weights', type=str,
+    parser.add_argument('voc_weights', metavar='voc_weights_dir', type=str,
                         help='[string/path] Load in different WaveRNN weights', default=None)
-    parser.add_argument('--save_dir', type=str, default=None)
+    parser.add_argument('save_dir', metavar='speech_save_dir', type=str, default=None)
 
     args = parser.parse_args()
     args.vocoder = 'wavernn'

@@ -97,6 +97,12 @@ class Preprocessor():
         return wav_id, m.shape[-1]
 
     def run(self):
+        '''
+            1. Load .wav files
+            2. Process suisiann csv file, save as text_dict.pkl 
+            3. Multiprocess .wav files, save correspondings in ./mel and ./quant
+            4. Save wav_id & mel length in ./dataset.pkl
+        '''
         # === wav files === #
         wav_files = get_files(
             self.dataset_path, extension=self.audio_extension)
@@ -154,7 +160,7 @@ if __name__ == '__main__':
 
     parser.add_argument(
         '--extension', '-e', metavar='EXT', default='.wav',
-        help='file extension to search for in dataset folder'
+        help='File extension to search for in dataset folder'
     )
 
     parser.add_argument(

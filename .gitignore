@@ -4,6 +4,10 @@ model_outputs/
 pretrained_models/
 training_data/
 
+# vs code
+.vscode
+testtesttest.py
+audio_samples/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

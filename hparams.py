@@ -94,8 +94,9 @@ if tts_model == 'tacotron2':
     dynamic_loss_scaling = True
     iters_per_checkpoint = 1000
 
-    from utils.text import symbols
+    from utils.text.symbols import symbols
     n_symbols = len(symbols)  # in model config
+    
 
     # symbols_embedding_dim=512
     symbols_embedding_dim = 256
