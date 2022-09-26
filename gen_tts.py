@@ -171,12 +171,15 @@ class TaiwaneseTacotron():
 if __name__ == '__main__':
     # Parse Arguments
     parser = argparse.ArgumentParser(description='TTS')
-    parser.add_argument('tts_weights', metavar='tts_weights_dir', type=str,
-                        help='[string/path] Load in different Tacotron weights', default=None)
+    parser.add_argument('input_file', type=str,
+                        help='[string/path] Input file containing input sentences')
 
-    parser.add_argument('voc_weights', metavar='voc_weights_dir', type=str,
-                        help='[string/path] Load in different WaveRNN weights', default=None)
-    parser.add_argument('save_dir', metavar='speech_save_dir', type=str, default=None)
+    parser.add_argument('--tts_weights', metavar='tts_weights_dir', type=str,
+                        help='[string/path] Load in different Tacotron weights', default=None, required=True)
+
+    parser.add_argument('--voc_weights', metavar='voc_weights_dir', type=str,
+                        help='[string/path] Load in different WaveRNN weights', default=None, required=True)
+    parser.add_argument('--save_dir', metavar='speech_save_dir', type=str, default="./result")
 
     args = parser.parse_args()
     args.vocoder = 'wavernn'
@@ -187,5 +190,6 @@ if __name__ == '__main__':
     args.overlap = None
     args.force_cpu = False
 
+    input_file = args.input_file
     TTS = TaiwaneseTacotron(args)
-    TTS.generate(file="sentences.txt")
+    TTS.generate(file=input_file)
