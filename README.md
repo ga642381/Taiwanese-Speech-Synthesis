@@ -7,10 +7,10 @@
 
 ## Quick Start
 
-1. Download [pretrained models](https://drive.google.com/drive/folders/1jLlJtP7BxLgTaoFqiNS_PD2GTLVXfdk9?usp=sharing)
+1. Download [pretrained models](https://drive.google.com/drive/folders/1XuQ2Q4CAU4By_E45JW-G-4CiGM8e8HV8?usp=sharing)
 2. Specify the inputs in "sentences.txt"
 3. Generate audios with the command
 ```
-python gen_tts.py --tts_weights ./pretrained_models/tacotron2.pyt --voc_weights ./pretrained_models/wavernn.pyt --save_dir ./audio_samples
+python gen_tts.py sentences.txt --tts_weights ./pretrained_models/tacotron2.pyt --voc_weights ./pretrained_models/wavernn.pyt --save_dir ./results
 ```
 
