@@ -14,3 +14,9 @@
 python gen_tts.py sentences.txt --tts_weights ./pretrained_models/tacotron2.pyt --voc_weights ./pretrained_models/wavernn.pyt --save_dir ./results
 ```
 
+## References
+1. [臺灣言語工具](https://github.com/i3thuan5/tai5-uan5_gian5-gi2_kang1-ku7)
+2. [fatchord/WaveRNN](https://github.com/fatchord/WaveRNN)
+3. [i3thuan5/SuiSiann-HunLian](https://github.com/i3thuan5/SuiSiann-HunLian)
+4. [台灣媠聲(SuíSiann Dataset)](https://suisiann-dataset.ithuan.tw/)
+
